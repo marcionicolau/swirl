@@ -49,7 +49,7 @@ compile_languages <- function(){
   ctime <- as.integer(Sys.time())
   clone_dir <- file.path(tempdir(), ctime)
   dir.create(clone_dir, showWarnings = FALSE)
-  git_clone <- paste("git clone https://github.com/swirl/translations.git", clone_dir)
+  git_clone <- paste("git clone https://github.com/swirldev/translations.git", clone_dir)
   system(git_clone)
   
   menus_dir <- file.path(clone_dir, "menus")
