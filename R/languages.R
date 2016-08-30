@@ -1,7 +1,7 @@
 swirl_language <- function(){
   lang <- getOption("swirl_language")
   langs <- c("chinese_simplified", "english", "french", "german", "korean", 
-             "spanish", "turkish")
+             "spanish", "turkish", "portuguese")
   
   if(is.null(lang) || !(lang %in% langs)){
     "english"
@@ -26,7 +26,7 @@ swirl_language <- function(){
 #' @export
 select_language <- function(language = NULL, append_rprofile = FALSE){
   langs <- c("chinese_simplified", "english", "french", "german", "korean", 
-             "spanish", "turkish")
+             "spanish", "turkish", "portuguese")
   if(is.null(language)){
     selection <- select.list(langs)
   } else if(!(language %in% langs)){
@@ -49,7 +49,7 @@ compile_languages <- function(){
   ctime <- as.integer(Sys.time())
   clone_dir <- file.path(tempdir(), ctime)
   dir.create(clone_dir, showWarnings = FALSE)
-  git_clone <- paste("git clone https://github.com/swirldev/translations.git", clone_dir)
+  git_clone <- paste("git clone https://github.com/swirl/translations.git", clone_dir)
   system(git_clone)
   
   menus_dir <- file.path(clone_dir, "menus")
@@ -57,7 +57,7 @@ compile_languages <- function(){
   
   for(i in menus){
     lang_name <- sub(".yaml$", "", basename(i))
-    cmd <- paste0(lang_name, " <- wrap_encoding(yaml.load_file('", i, "'))")
+    cmd <- paste0(lang_name, " <- wrap_encoding(yaml::yaml.load_file('", i, "'))")
     eval(parse(text=cmd))
   }
   
